@@ -4,7 +4,7 @@ use warnings;
 
 package Symbol::Global::Name;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 NAME
 
@@ -84,7 +84,7 @@ sub _find {
         # if the entry has a trailing '::' then
         # it is a link to another name space
         if ( substr( $k, -2 ) eq '::') {
-            $name = $self->_find( $ref, $k );
+            $name = $self->_find( $ref, $pack eq 'main::'? $k : $pack.$k );
             return $name if $name;
         }
 
