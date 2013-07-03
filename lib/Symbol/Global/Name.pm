@@ -4,7 +4,7 @@ use warnings;
 
 package Symbol::Global::Name;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 =head1 NAME
 
@@ -97,7 +97,7 @@ sub _find {
         # get entry for type we are looking for
 
         # XXX skip references to scalars or other references.
-        # Otherwie 5.10 goes boom. may be we should skip any
+        # Otherwise 5.10 goes boom. maybe we should skip any
         # reference
         next if ref($entry) eq 'SCALAR' || ref($entry) eq 'REF';
 
@@ -107,6 +107,7 @@ sub _find {
         $ref_type = 'SCALAR' if $ref_type eq 'REF';
 
         my $entry_ref = *{$entry}{ $ref_type };
+        next if ref $entry_ref && ref $entry_ref ne ref $ref;
         next unless $entry_ref;
 
         # if references are equal then we've found
